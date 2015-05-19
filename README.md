@@ -10,6 +10,7 @@ http://docs.aws.amazon.com/AWSECommerceService/latest/DG/becomingDev.html
 ASIN(Amazon Standard Item Number)
 ASIN
 Amazon Standard Identification Number, which is an alphanumeric token assigned by Amazon to an item that uniquely identifies it.
+
 ==============
 IdType
 
@@ -18,6 +19,7 @@ Type of item identifier used to look up an item. All IdTypes except ASINx requir
 Type: String
 
 Default: ASIN
+
 ==============
 ItemId
 
@@ -43,9 +45,9 @@ http://www.amazon.com/Nokia-Lumia-928-Verizon-Wireless/dp/B00CQAODG4/ref=sr_1_7?
 
 而在已知一个ASIN，则可以通过：
 
-http://www.amazon.com/gp/product/ASIN
+http://www.amazon.com/gp/product/ASIN的方式去访问到产品的页面的信息
 
-的方式去访问到产品的页面的信息
+
 ============
 关于IdType和ItemId的关系，后来才搞懂：
 
