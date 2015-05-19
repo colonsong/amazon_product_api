@@ -1,5 +1,5 @@
-# amazom_product_api
-amazom_ad_product_api
+# amazon_product_api
+amazon_ad_product_api
 
 
 在該國國家註冊
