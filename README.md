@@ -5,7 +5,8 @@ amazon_ad_product_api
 在該國國家註冊
 http://docs.aws.amazon.com/AWSECommerceService/latest/DG/becomingDev.html
 
-名詞解釋
+###名詞解釋
+
 ==============
 ASIN(Amazon Standard Item Number)
 ASIN
@@ -80,7 +81,8 @@ reqDict["ItemId"] = "B00CQAODG4";
 http://docs.aws.amazon.com/AWSECommerceService/latest/DG/ItemsforSale.html
 ============
 
-使用ａｐｉ之前 申請ｋｅｙ
+###使用ａｐｉ之前 申請ｋｅｙ
+
 取得兩個Access Key ID ＆Associates ID & secret ID
 
 access key分兩種
@@ -95,19 +97,24 @@ https://console.aws.amazon.com/iam/home?#security_credential
 得到Access Key ID
 
 =========
+
 WSDL
 http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl
 =========
+
 2011年11月后，好像对于所有的request，都要加上一个Associate Tag的，否则貌似返回都是null和错误。
 其实很简单，就是去：
 
 http://docs.aws.amazon.com/AWSECommerceService/latest/DG/becomingAssociate.html
+
 =========
-request
+###request
 
 有了API KEY 與Associates ID 後 就可以開始request
 REST請求
+
 http://docs.aws.amazon.com/AWSECommerceService/latest/DG/CHAP_MakingRequestsandUnderstandingResponses.html
+
 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 以ｕｓ地區為例 request 網址為
 US
@@ -144,6 +151,7 @@ http://docs.aws.amazon.com/AWSECommerceService/latest/DG/BrowseNodeLookup.html
 
 
 SimilarityLookup：給定某個產品，去查詢與其相似的產品
+
 http://docs.aws.amazon.com/AWSECommerceService/latest/DG/SimilarityLookup.html
 
 
@@ -155,7 +163,9 @@ CartClear
 CartGet
 
 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
 論壇
+
 https://forums.aws.amazon.com/forum.jspa?forumID=9
 
 
