@@ -1,5 +1,5 @@
-# amazon_product_api
-amazon_ad_product_api
+# amazon_product_api 
+網路整理Amazon文件 
 
 
 在該國國家註冊
