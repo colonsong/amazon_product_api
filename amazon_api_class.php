@@ -89,14 +89,9 @@
             }
             else
             {
-                if (isset($response->Items->Item->ItemAttributes->Title))
-                {
+
                     return ($response);
-                }
-                else
-                {
-                    throw new Exception("Invalid xml response.");
-                }
+
             }
         }
 
@@ -206,6 +201,25 @@
             $xml_response = $this->queryAmazon($parameters);
 
             return $this->verifyXmlResponse($xml_response);
+        }
+
+        /**
+         * 取的分類階層資訊
+         * http://docs.aws.amazon.com/AWSECommerceService/latest/DG/BrowseNodeLookup.html
+         *
+         * @param string $browse_node_id 節點ID 請參考網址http://docs.aws.amazon.com/AWSECommerceService/latest/DG/localevalues.html
+         * @param string $response_group 暫時不用 回傳資訊 Valid Values: MostGifted | NewReleases | MostWishedFor | TopSellers
+         * @return mixed simpleXML object
+         */
+        public function getBrowseNodeInfo($browse_node_id)
+        {
+          $parameters = array("Operation"   => "BrowseNodeLookup",
+                              "BrowseNodeId"    =>$browse_node_id,
+                              "ResponseGroup" => "TopSellers");
+                                var_dump($parameters);
+          $xml_response = $this->queryAmazon($parameters);
+
+          return $this->verifyXmlResponse($xml_response);
         }
 
     }
