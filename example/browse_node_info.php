@@ -7,7 +7,7 @@
 
     try
     {
-        $result = $obj->getBrowseNodeInfo('165797011');
+        $result = $obj->getBrowseNodeInfo('165797011','BrowseNodeInfo');
     }
     catch(Exception $e)
     {

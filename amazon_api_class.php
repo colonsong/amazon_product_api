@@ -211,11 +211,11 @@
          * @param string $response_group 暫時不用 回傳資訊 Valid Values: MostGifted | NewReleases | MostWishedFor | TopSellers
          * @return mixed simpleXML object
          */
-        public function getBrowseNodeInfo($browse_node_id)
+        public function getBrowseNodeInfo($browse_node_id,$response_group)
         {
           $parameters = array("Operation"   => "BrowseNodeLookup",
                               "BrowseNodeId"    =>$browse_node_id,
-                              "ResponseGroup" => "BrowseNodeInfo");
+                              "ResponseGroup" => $response_group);
                                 var_dump($parameters);
           $xml_response = $this->queryAmazon($parameters);
 
