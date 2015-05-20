@@ -1,2 +1,4 @@
-# amazom_product_api
-amazom_ad_product_api
+# amazon_product_api 
+網路整理Amazon文件 
+
+https://www.gitbook.com/book/songchenghao/amazon-product-advertising-api/details
