@@ -63,20 +63,9 @@
             <li class="active"><a href="?example=search_products">product search <span class="sr-only">(current)</span></a></li>
             <li><a href="?example=search_by_keyword">關鍵字查詢 (分類、關鍵字)</a></li>
             <li><a href="?example=browse_node_info">節點查詢</a></li>
-            <li><a href="#">Export</a></li>
+            <li><a href="#">---</a></li>
           </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-          </ul>
+
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
