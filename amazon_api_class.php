@@ -215,7 +215,7 @@
         {
           $parameters = array("Operation"   => "BrowseNodeLookup",
                               "BrowseNodeId"    =>$browse_node_id,
-                              "ResponseGroup" => "TopSellers");
+                              "ResponseGroup" => "BrowseNodeInfo");
                                 var_dump($parameters);
           $xml_response = $this->queryAmazon($parameters);
 

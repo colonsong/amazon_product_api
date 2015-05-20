@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Amazon API</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" target="new_blank" href="https://github.com/colonsong/amazon_product_api">GITHUB</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
