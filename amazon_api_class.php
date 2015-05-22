@@ -165,13 +165,20 @@
             return $this->verifyXmlResponse($xml_response);
 
         }
-
+        /**
+         * 要取得其他顏色與尺寸 ItemId是getItemByAsin XML資訊裡的parent ASIN TAG
+         * ResponseGroup用VariationMatrix就可以了
+         *
+         * @param int $upc_code UPC code of the product to search
+         * @param string $product_type type of the product
+         * @return mixed simpleXML object
+         */
         public function getItemColorSize($asin_code)
         {
           $parameters = array("Operation"     => "ItemLookup",
                               "ItemId"        => $asin_code,
                               "Condition"     => "All",
-                            
+
                               "ResponseGroup" => "VariationMatrix");
 
           $xml_response = $this->queryAmazon($parameters);
