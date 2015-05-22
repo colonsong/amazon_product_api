@@ -166,18 +166,34 @@
 
         }
 
+        public function getItemColorSize($asin_code)
+        {
+          $parameters = array("Operation"     => "ItemLookup",
+                              "ItemId"        => $asin_code,
+                              "Condition"     => "All",
+                            
+                              "ResponseGroup" => "VariationMatrix");
+
+          $xml_response = $this->queryAmazon($parameters);
+
+          return $this->verifyXmlResponse($xml_response);
+        }
+
 
         /**
          * Return details of a product searched by ASIN
          *
          * @param int $asin_code ASIN code of the product to search
+         * ResponseGroup 回傳資訊
+         * http://docs.aws.amazon.com/AWSECommerceService/latest/DG/CHAP_ResponseGroupsList.html
          * @return mixed simpleXML object
          */
         public function getItemByAsin($asin_code)
         {
             $parameters = array("Operation"     => "ItemLookup",
                                 "ItemId"        => $asin_code,
-                                "ResponseGroup" => "Medium");
+                                "Condition"     => "All",
+                                "ResponseGroup" => "ItemAttributes");
 
             $xml_response = $this->queryAmazon($parameters);
 
