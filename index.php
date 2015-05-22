@@ -53,7 +53,7 @@
             <li class=""><a href="?example=search_products">product search <span class="sr-only">(current)</span></a></li>
             <li><a href="?example=search_by_keyword">關鍵字查詢 (分類、關鍵字)</a></li>
             <li><a href="?example=browse_node_info">節點查詢</a></li>
-            <li><a href="?example=item_by_asin">取得商品 by asin</a></li>
+            <li><a href="?example=item_by_asin">取得商品圖片 by asin</a></li>
             <li><a href="?example=item_color_size">取得商品顏色尺寸 by parent asin</a></li>
           </ul>
 

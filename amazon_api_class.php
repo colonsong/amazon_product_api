@@ -200,7 +200,7 @@
             $parameters = array("Operation"     => "ItemLookup",
                                 "ItemId"        => $asin_code,
                                 "Condition"     => "All",
-                                "ResponseGroup" => "ItemAttributes");
+                                "ResponseGroup" => "ItemAttributes,Images");
 
             $xml_response = $this->queryAmazon($parameters);
 
