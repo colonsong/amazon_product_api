@@ -239,7 +239,7 @@
           $parameters = array("Operation"   => "BrowseNodeLookup",
                               "BrowseNodeId"    =>$browse_node_id,
                               "ResponseGroup" => $response_group);
-                                var_dump($parameters);
+                              
           $xml_response = $this->queryAmazon($parameters);
 
           return $this->verifyXmlResponse($xml_response);
