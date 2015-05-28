@@ -15,6 +15,18 @@
           echo $e->getMessage();
       }
       if(isset($result['BrowseNodes'])){
+          if(isset($result['BrowseNodes']['Request']['Errors'])){
+?>
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">錯誤訊息</h3>
+      </div>
+      <div class="panel-body">
+          <PRE><?php echo print_r($result['BrowseNodes']['Request'], TRUE); ?></PRE>
+      </div>
+    </div>
+<?php
+          }else{
 ?>
 
     <div class="panel panel-primary">
@@ -34,7 +46,7 @@
       </div>
     </div>
 <?php
-      
+          }
       }
     }else{
 ?>
