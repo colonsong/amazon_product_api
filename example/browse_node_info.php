@@ -14,9 +14,28 @@
       {
           echo $e->getMessage();
       }
-      echo '<PRE>';
-      print_r($result);
-      echo '</PRE>';
+      if(isset($result['BrowseNodes'])){
+?>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">傳送參數</h3>
+      </div>
+      <div class="panel-body">
+          <PRE><?php echo print_r($result['BrowseNodes']['Request'], TRUE); ?></PRE>
+      </div>
+    </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">回應</h3>
+      </div>
+      <div class="panel-body">
+          <PRE><?php echo print_r($result['BrowseNodes']['BrowseNode'], TRUE); ?></PRE>
+      </div>
+    </div>
+<?php
+      
+      }
     }else{
 ?>
 <form class="form-horizontal" method="post" action="?example=browse_node_info">
