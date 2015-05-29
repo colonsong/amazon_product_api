@@ -63,14 +63,17 @@
       </div><!-- /input-group -->
     </div>
   </div>
-  <!--
   <div class="form-group">
-    <label for="response_group" class="col-sm-2 control-label">ResponseGroup</label>
+    <label for="browse_node_id" class="col-sm-2 control-label">項目</label>
     <div class="col-sm-10">
-      <input type="text" name="response_group" class="form-control" id="response_group" placeholder="Enter response_group">
-    </div>  
+      <div class="input-group">
+        <select class="form-control" name="response_group">
+            <option value="BrowseNodeInfo">節點資訊</option>
+            <option value="TopSellers">Top Sellers</option>
+          </select>
+      </div><!-- /input-group -->
+    </div>
   </div>
-  -->
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">Submit</button>
