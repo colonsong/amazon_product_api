@@ -11,10 +11,7 @@ if(isset($_POST['OfferListingId']) )
       //只新增一次cart
       if(isset($_SESSION['cart']))
       {
-        echo '只新增一次cart';
-        echo '<PRE>';
-        print_r($_SESSION['cart']);
-        echo '/<PRE>';
+        echo '只能新增一次cart';
       }
       else {
         $obj = new AmazonProductAPI();
