@@ -73,7 +73,10 @@
         const DVD   = "DVD";
         const GAMES = "VideoGames";
 
+        public function AmazonProductAPI()
+        {
 
+        }
         /**
          * Check if the xml received from Amazon is valid
          *
@@ -91,7 +94,7 @@
             else
             {
 
-                    return $this->objectToArray($response);
+                return $this->objectToArray($response);
 
             }
         }
@@ -288,6 +291,28 @@
           }
 
           echo '</PRE>';
+        }
+
+        /**
+        * 新增購物車 不可重複叫 失效90 days
+        * http://docs.aws.amazon.com/AWSECommerceService/latest/DG/CreatingaRemoteShoppingCart.html
+        *
+        */
+        public function create_cart()
+        {
+          $OfferListingId = $_POST['OfferListingId'];
+          $Quantity = $_POST['Quantity'];
+
+          $parameters = array("Operation"   => "CartCreate",
+                              "OfferListingId"    => $OfferListingId ,
+                              "Quantity" => $Quantity);
+
+          $xml_response = $this->queryAmazon($parameters);
+
+          $cart =  $this->verifyXmlResponse($xml_response);
+          session_start();
+          $_SESSION['cart'] = $cart;
+          return $cart;
         }
 
 

@@ -1,11 +1,41 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+if(isset($_SESSION['cart']))
+{
+  print_r($_SESSION['cart']);
+}
+if(isset($_POST['OfferListingId']) )
+{
+  require("amazon_api_class.php");
+
+  try
+  {
+      //只新增一次cart
+      if(isset($_SESSION['cart']))
+      {
+        print_r($_SESSION['cart']);
+      }
+      else {
+        $obj = new AmazonProductAPI();
+        $result = $obj->create_cart();
+        print_r($result);
+      }
+
+
+  }
+  catch(Exception $e)
+  {
+      echo $e->getMessage();
+  }
+}
+
 if(isset($_POST['asin_str']) ):
 
     /* Example usage of the Amazon Product Advertising API */
-    require("amazon_api_class.php");
 
+    require("amazon_api_class.php");
     $obj = new AmazonProductAPI();
     try
     {
@@ -19,6 +49,7 @@ if(isset($_POST['asin_str']) ):
     }
 
 ?>
+<form class="form-horizontal" method="post" action="?example=shopping_cart">
 <div class="row">
   <div class="col-sm-6 col-md-4">
     <div class="thumbnail">
@@ -29,7 +60,8 @@ if(isset($_POST['asin_str']) ):
         <p>item code:<?php echo $result['item_xml']['Items']['Request']['ItemLookupRequest']['ItemId']; ?></p>
         <p>Color <?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['Color'] ?></p>
         <p>ListPrice <?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['ListPrice']['CurrencyCode']; ?></p>
-
+        <input type="hidden" name="OfferListingId" value="<?php echo $result['item_xml']['Items']['Item']['Offers']['Offer']['OfferListing']['OfferListingId']; ?>"/>
+        <input type="hidden" name="Quantity" value="1"/>
         <select class="form-control">
           <option>選擇顏色</option>
           <?php foreach($result['p_item_xml']['Items']['Item']['Variations']['Item'] as $info):?>
@@ -47,13 +79,13 @@ if(isset($_POST['asin_str']) ):
         </p>
           <!--<a href="#" class="btn btn-primary" role="button"><?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['PackageQuantity'] ?></a>-->
           <a href="#" class="btn btn-primary" role="button"><?php echo $result['item_xml']['Items']['Item']['Offers']['TotalOffers']; ?></a>
-          <a href="#" class="btn btn-default" role="button">加入購物車</a>
+          <button type="submit" class="btn btn-default">加入購物車</button>
         </p>
       </div>
     </div>
   </div>
 </div>
-
+</form>
 <?php endif;?>
 
 <form class="form-horizontal" method="post" action="?example=shopping_cart">
