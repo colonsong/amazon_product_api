@@ -254,12 +254,16 @@
         **/
         public function getCartPage($asin_code)
         {
+
             $item_xml = $this->getItemByAsin($asin_code);
 
             //$this->_pre($item_xml);
-            if(isset( $item_xml->Items->Item->ParentASIN))
+
+          
+            if(isset( $item_xml['Items']['Item']['ParentASIN']))
             {
-               $parent_xml = $this->getItemColorSize($item_xml->Items->Item->ParentASIN);
+
+               $parent_xml = $this->getItemColorSize($item_xml['Items']['Item']['ParentASIN']);
                //$this->_pre($parent_xml);
             }
 
