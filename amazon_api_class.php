@@ -300,17 +300,19 @@
         */
         public function create_cart()
         {
+
           $OfferListingId = $_POST['OfferListingId'];
           $Quantity = $_POST['Quantity'];
 
           $parameters = array("Operation"   => "CartCreate",
-                              "OfferListingId"    => $OfferListingId ,
-                              "Quantity" => $Quantity);
+                              "Item.1.OfferListingId"    => $OfferListingId ,
+                              "Item.1.Quantity" => $Quantity,
+                            );
 
           $xml_response = $this->queryAmazon($parameters);
 
           $cart =  $this->verifyXmlResponse($xml_response);
-          session_start();
+        
           $_SESSION['cart'] = $cart;
           return $cart;
         }

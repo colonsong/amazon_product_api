@@ -2,10 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if(isset($_SESSION['cart']))
-{
-  print_r($_SESSION['cart']);
-}
 if(isset($_POST['OfferListingId']) )
 {
   require("amazon_api_class.php");
@@ -15,12 +11,18 @@ if(isset($_POST['OfferListingId']) )
       //只新增一次cart
       if(isset($_SESSION['cart']))
       {
+        echo '只新增一次cart';
+        echo '<PRE>';
         print_r($_SESSION['cart']);
+        echo '/<PRE>';
       }
       else {
         $obj = new AmazonProductAPI();
         $result = $obj->create_cart();
+        echo '第一次新增';
         print_r($result);
+        echo '<br/>session: ';
+        print_r($_SESSION['cart']);
       }
 
 
@@ -86,6 +88,7 @@ if(isset($_POST['asin_str']) ):
   </div>
 </div>
 </form>
+
 <?php endif;?>
 
 <form class="form-horizontal" method="post" action="?example=shopping_cart">
@@ -105,3 +108,14 @@ if(isset($_POST['asin_str']) ):
     </div>
   </div>
 </form>
+
+<?php
+if(isset($_SESSION['cart']))
+{
+  echo 'Cart Session';
+  echo '<PRE>';
+  print_r($_SESSION['cart']);
+  echo '</PRE>';
+}
+
+?>
