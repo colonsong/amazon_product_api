@@ -29,7 +29,8 @@
     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
     DEALINGS IN THE SOFTWARE.
     */
-
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
     require_once 'aws_signed_request.php';
     require_once 'key.php';
 
@@ -239,10 +240,45 @@
           $parameters = array("Operation"   => "BrowseNodeLookup",
                               "BrowseNodeId"    =>$browse_node_id,
                               "ResponseGroup" => $response_group);
-                              
+
           $xml_response = $this->queryAmazon($parameters);
 
           return $this->verifyXmlResponse($xml_response);
+        }
+
+        /**
+        * 整合之前的查詢單品SIZE與圖片 產生一個比較完整的可以下單的單品頁
+        *
+        *
+        **/
+        public function getCartPage($asin_code)
+        {
+            $item_xml = $this->getItemByAsin($asin_code);
+
+            //$this->_pre($item_xml);
+            if(isset( $item_xml->Items->Item->ParentASIN))
+            {
+               $parent_xml = $this->getItemColorSize($item_xml->Items->Item->ParentASIN);
+               //$this->_pre($parent_xml);
+            }
+
+            return ['item_xml' => $item_xml,'p_item_xml'=>$parent_xml];
+        }
+
+        private function _pre($code)
+        {
+          echo '<PRE>';
+          if(is_array($code) || is_object($code))
+          {
+
+            print_r($code);
+          }
+          else {
+            echo $code;
+            echo '==';
+          }
+
+          echo '</PRE>';
         }
 
     }
