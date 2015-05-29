@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 if(isset($_POST['asin_str']) ):
 
     /* Example usage of the Amazon Product Advertising API */
@@ -34,6 +36,7 @@ if(isset($_POST['asin_str']) ):
             <option><?php echo $info['ItemAttributes']['Color'];?></option>
           <?php endforeach;?>
         </select>
+        <p></p>
         <select class="form-control">
           <option>選擇尺寸</option>
           <?php foreach($result['p_item_xml']['Items']['Item']['Variations']['Item'] as $info):?>
@@ -41,8 +44,9 @@ if(isset($_POST['asin_str']) ):
           <?php endforeach;?>
         </select>
         <p>
-        <p>
-          <a href="#" class="btn btn-primary" role="button"><?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['PackageQuantity'] ?></a>
+        </p>
+          <!--<a href="#" class="btn btn-primary" role="button"><?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['PackageQuantity'] ?></a>-->
+          <a href="#" class="btn btn-primary" role="button"><?php echo $result['item_xml']['Items']['Item']['Offers']['TotalOffers']; ?></a>
           <a href="#" class="btn btn-default" role="button">加入購物車</a>
         </p>
       </div>

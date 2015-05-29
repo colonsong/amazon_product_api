@@ -193,6 +193,7 @@
          *
          * @param int $asin_code ASIN code of the product to search
          * ResponseGroup 回傳資訊
+         * http://docs.aws.amazon.com/AWSECommerceService/latest/DG/OffersVersusAvailability.html
          * http://docs.aws.amazon.com/AWSECommerceService/latest/DG/CHAP_ResponseGroupsList.html
          * @return mixed simpleXML object
          */
@@ -201,7 +202,8 @@
             $parameters = array("Operation"     => "ItemLookup",
                                 "ItemId"        => $asin_code,
                                 "Condition"     => "All",
-                                "ResponseGroup" => "ItemAttributes,Images");
+                                "Availability"  => "Available",
+                                "ResponseGroup" => "ItemAttributes,Images,Offers");
 
 
             $xml_response = $this->queryAmazon($parameters);
@@ -259,8 +261,10 @@
 
             //$this->_pre($item_xml);
 
-          
-            if(isset( $item_xml['Items']['Item']['ParentASIN']))
+            if(isset( $item_xml['Items']['Item']['ParentASIN']) &&
+               isset( $item_xml['Items']['Item']['Offers']) && //確保可賣量
+               $item_xml['Items']['Item']['Offers']['TotalOffers'] > 0
+            )
             {
 
                $parent_xml = $this->getItemColorSize($item_xml['Items']['Item']['ParentASIN']);
