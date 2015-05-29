@@ -14,11 +14,47 @@
       {
           echo $e->getMessage();
       }
-      echo '<PRE>';
+	  
+	  if(isset($result['Items'])){
+          if(isset($result['Items']['Request']['Errors'])){
+		  
+     /* echo '<PRE>';
       print_r($result);
-      echo '</PRE>';
+      echo '</PRE>';*/
+?>
+	<div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">錯誤訊息</h3>
+      </div>
+      <div class="panel-body">
+          <PRE><?php echo print_r($result['Items']['Request'], TRUE); ?></PRE>
+      </div>
+    </div>
+<?php
+      }else{
+?>
+	<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">傳送參數</h3>
+      </div>
+      <div class="panel-body">
+          <PRE><?php echo print_r($result['Items']['Request'], TRUE); ?></PRE>
+      </div>
+    </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">回應</h3>
+      </div>
+      <div class="panel-body">
+          <PRE><?php echo print_r($result['Items']['Item'], TRUE); ?></PRE>
+      </div>
+    </div>
+<?php
+          }
+      }
     }else{
 ?>
+
 <form class="form-horizontal" method="post" action="?example=search_by_keyword">
   <div class="form-group">
     <label for="keyword" class="col-sm-2 control-label">keyword</label>

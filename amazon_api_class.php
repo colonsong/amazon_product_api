@@ -91,7 +91,7 @@
             else
             {
 
-                    return ($response);
+                    return $this->objectToArray($response);
 
             }
         }
@@ -203,6 +203,7 @@
                                 "Condition"     => "All",
                                 "ResponseGroup" => "ItemAttributes,Images");
 
+
             $xml_response = $this->queryAmazon($parameters);
 
             return $this->verifyXmlResponse($xml_response);
@@ -279,6 +280,29 @@
           }
 
           echo '</PRE>';
+        }
+
+
+        /*
+        *
+        * Convert an object to an array
+        *
+        * @param    object  $object The object to convert
+        * @reeturn      array
+        *
+        */
+        public function objectToArray( $object )
+        {
+            if( !is_object( $object ) && !is_array( $object ) )
+            {
+                return $object;
+            }
+            if( is_object( $object ) )
+            {
+                $object = get_object_vars( $object );
+            }
+            return array_map( array('AmazonProductAPI','objectToArray'), $object );
+
         }
 
     }
