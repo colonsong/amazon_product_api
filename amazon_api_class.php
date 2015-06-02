@@ -312,9 +312,36 @@
           $xml_response = $this->queryAmazon($parameters);
 
           $cart =  $this->verifyXmlResponse($xml_response);
-        
+
           $_SESSION['cart'] = $cart;
           return $cart;
+        }
+
+        /**
+        * 取得購物車內容
+        *
+        **/
+        public function getCart()
+        {
+
+          if(isset($_SESSION['cart']['Cart']['CartId']) &&
+          isset($_SESSION['cart']['Cart']['HMAC']))
+          {
+
+
+            $parameters = array("Operation"   => "CartGet",
+                                "CartId"    =>$_SESSION['cart']['Cart']['CartId'],
+                                "HMAC" => $_SESSION['cart']['Cart']['HMAC']);
+
+            $xml_response = $this->queryAmazon($parameters);
+
+            $cart =  $this->verifyXmlResponse($xml_response);
+
+            $this->_pre($cart);
+          }
+
+
+
         }
 
 
