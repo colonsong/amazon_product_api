@@ -59,6 +59,9 @@
             <li><a href="?example=item_color_size">取得商品顏色尺寸 by parent asin</a></li>
             <li><a href="?example=shopping_cart">購物車整合</a></li>
             <li><a href="?example=get_cart">查看購物車</a></li>
+            <li><a href="?example=multi_product">加購物車多筆</a></li>
+            
+            <li><a href="?example=session_reset">SESSION_RESET</a></li>
           </ul>
 
         </div>

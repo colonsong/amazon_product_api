@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+unset($_SESSION['cart']);
 
 if(isset($_POST['OfferListingId']) )
 {
@@ -59,7 +60,8 @@ if(isset($_POST['asin_str']) ):
         <p>item code:<?php echo $result['item_xml']['Items']['Request']['ItemLookupRequest']['ItemId']; ?></p>
         <p>Color <?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['Color'] ?></p>
         <p>ListPrice <?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['ListPrice']['CurrencyCode']; ?></p>
-        <input type="hidden" name="OfferListingId" value="<?php echo $result['item_xml']['Items']['Item']['Offers']['Offer']['OfferListing']['OfferListingId']; ?>"/>
+        <!--<input type="hidden" name="OfferListingId" value="<?php echo $result['item_xml']['Items']['Item']['Offers']['Offer']['OfferListing']['OfferListingId']; ?>"/>-->
+        <input type="hidden" name="OfferListingId" value="<?php echo $result['item_xml']['Items']['Request']['ItemLookupRequest']['ItemId']; ?>"/>
         <input type="hidden" name="Quantity" value="1"/>
         <select class="form-control">
           <option>選擇顏色</option>

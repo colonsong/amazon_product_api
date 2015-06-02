@@ -254,30 +254,41 @@
 
         /**
         * 整合之前的查詢單品SIZE與圖片 產生一個比較完整的可以下單的單品頁
-        *
+        * http://docs.aws.amazon.com/AWSECommerceService/latest/DG/CartCreate.html
         *
         **/
-        public function getCartPage($asin_code)
+        public function getCartPage($asin_code,$get_size = TRUE)
         {
 
             $item_xml = $this->getItemByAsin($asin_code);
-
+            if(! isset( $item_xml['Items']['Item']['Offers']) || //確保可賣量
+            !isset($item_xml['Items']['Item']['Offers']['TotalOffers']) ||
+             $item_xml['Items']['Item']['Offers']['TotalOffers'] <= 0)
+             {
+               return FALSE;
+             }
             //$this->_pre($item_xml);
-
-            if(isset( $item_xml['Items']['Item']['ParentASIN']) &&
-               isset( $item_xml['Items']['Item']['Offers']) && //確保可賣量
-               $item_xml['Items']['Item']['Offers']['TotalOffers'] > 0
-            )
+            if($get_size)
             {
 
-               $parent_xml = $this->getItemColorSize($item_xml['Items']['Item']['ParentASIN']);
-               //$this->_pre($parent_xml);
+              if( isset( $item_xml['Items']['Item']['ParentASIN']))
+              {
+
+                 $parent_xml = $this->getItemColorSize($item_xml['Items']['Item']['ParentASIN']);
+                 //$this->_pre($parent_xml);
+              }
+              return ['item_xml' => $item_xml,'p_item_xml'=>$parent_xml];
             }
 
-            return ['item_xml' => $item_xml,'p_item_xml'=>$parent_xml];
+            return ['item_xml' => $item_xml];
+
+
+
         }
 
-        private function _pre($code)
+
+
+        public function _pre($code)
         {
           echo '<PRE>';
           if(is_array($code) || is_object($code))
@@ -300,14 +311,34 @@
         */
         public function create_cart()
         {
-
+          print_r($_POST);
           $OfferListingId = $_POST['OfferListingId'];
           $Quantity = $_POST['Quantity'];
 
-          $parameters = array("Operation"   => "CartCreate",
-                              "Item.1.OfferListingId"    => $OfferListingId ,
-                              "Item.1.Quantity" => $Quantity,
-                            );
+          $item_array = [];
+
+          if(! is_array($OfferListingId))
+          {
+            $OfferListingId = [$OfferListingId];
+            $Quantity = [$Quantity];
+          }
+
+          foreach($OfferListingId as $key => $offer_listing_id)
+          {
+            if(!isset($_POST['check'.$key]))
+            {
+              continue;
+            }
+            //可用ASIN or $OfferListingId,但同時一個ｉｔｅｍ只能有一個type
+            $item_array['Item.'.($key+1).'.ASIN'] = $offer_listing_id;
+            $item_array['Item.'.($key+1).'.Quantity'] = $Quantity[$key];
+          }
+
+          $parameters = array("Operation" => "CartCreate");
+
+          $parameters = array_merge($parameters,$item_array);
+
+          print_r($parameters);
 
           $xml_response = $this->queryAmazon($parameters);
 
@@ -315,6 +346,21 @@
 
           $_SESSION['cart'] = $cart;
           return $cart;
+        }
+
+        public function clear_cart()
+        {
+          if( isset($_SESSION['cart']['Cart']['CartId']) &&
+            isset($_SESSION['cart']['Cart']['HMAC']))
+          {
+            $parameters = array("Operation"   => "CartClear",
+                              "CartId"    =>$_SESSION['cart']['Cart']['CartId'],
+                              "HMAC" => $_SESSION['cart']['Cart']['HMAC']);
+
+            $xml_response = $this->queryAmazon($parameters);
+
+            return $this->verifyXmlResponse($xml_response);
+          }
         }
 
         /**
@@ -343,6 +389,7 @@
 
 
         }
+
 
 
         /*
