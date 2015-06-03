@@ -41,53 +41,43 @@ $asin_array = [
               'B00HQWZ6UY',
               'B00IB1BTWI',
               'B009NOGSQE',
-              'B00PCLLXYY'
+              'B00M55C0NS',
+              'B00OGUATX8',
             ];
 ?>
 
-
 <form class="form-horizontal" method="post" action="?example=multi_product">
-  <div class="row">
-  <?php foreach($asin_array as $key => $asin):
-    $result = $obj->getCartPage($asin,FALSE);
-    if($result === FALSE)
-    {
-      continue;
-    }
-    //print_r($result);
-    //print_r($result['item_xml']['Items']['Item']);
-    ?>
-
-
-        <div class="col-sm-3 col-md-2">
-          <div class="thumbnail">
-            <img src="<?php echo $result['item_xml']['Items']['Item']['MediumImage']['URL']; ?>" alt="...">
-            <div class="caption">
-              <!--<h3><?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['Title']; ?></h3>
-              <p>item type:<?php echo $result['item_xml']['Items']['Request']['ItemLookupRequest']['IdType']; ?></p>  -->
-              <p><?php echo $result['item_xml']['Items']['Request']['ItemLookupRequest']['ItemId']; ?></p>
-
-              <input type="hidden" name="OfferListingId[]" value="<?php echo $result['item_xml']['Items']['Request']['ItemLookupRequest']['ItemId']; ?>"/>
-              <input type="hidden" name="Quantity[]" value="1"/>
-              </p>
-              <!--
-                <a href="#" class="btn btn-primary" role="button"><?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['PackageQuantity'] ?></a>
-                <a href="#" class="btn btn-primary" role="button"><?php echo $result['item_xml']['Items']['Item']['Offers']['TotalOffers']; ?></a>
-
-              </p>
-              -->
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="check<?php echo $key?>"> 買
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-<?php endforeach;?>
-  </div>
+    <table class="table table-hover">
+        <tr>
+            <th></th><th>image</th><th>ASIN</th><th>title</th><th>list price/price</th><th>debug</th>
+        </tr>
+        <?php 
+        $item_c = 0;
+        foreach($asin_array as $key => $asin):
+        $result = $obj->getCartPage($asin,FALSE);
+        if($result === FALSE)
+        {
+          continue;
+        }
+        //print_r($result);
+        //print_r($result['item_xml']['Items']['Item']);
+        ?>
+        <input type="hidden" name="OfferListingId[]" value="<?php echo $result['item_xml']['Items']['Request']['ItemLookupRequest']['ItemId']; ?>"/>
+        <input type="hidden" name="Quantity[]" value="1"/>
+        <tr>
+            <td><input type="checkbox" name="check<?php echo $item_c?>"> 買</td>
+            <td><img src="<?php echo $result['item_xml']['Items']['Item']['MediumImage']['URL']; ?>" alt="..."></td>
+            <td><?php echo $result['item_xml']['Items']['Request']['ItemLookupRequest']['ItemId']; ?></td>
+            <td><a href="<?php echo $result['item_xml']['Items']['Item']['DetailPageURL']; ?>" target="_blank"><?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['Title']; ?></a></td>
+            <td><?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['ListPrice']['CurrencyCode']; ?> <?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['ListPrice']['FormattedPrice']; ?>
+                /<?php echo $result['item_xml']['Items']['Item']['Offers']['Offer']['OfferListing']['Price']['CurrencyCode']; ?> <?php echo $result['item_xml']['Items']['Item']['Offers']['Offer']['OfferListing']['Price']['FormattedPrice']; ?></td>
+            <td><!--/<?php echo $result['item_xml']['Items']['Item']['ItemAttributes']['PackageQuantity'] ?>/<?php echo $result['item_xml']['Items']['Item']['Offers']['TotalOffers']; ?>/<?php var_dump($result['item_xml']['Items']['Item']); ?>--></td>
+        </tr>
+        <?php 
+        $item_c++;
+        endforeach;
+        ?>
+    </table>
   <button type="submit" class="btn btn-default">加入購物車</button>
 </form>
 

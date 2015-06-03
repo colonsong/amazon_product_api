@@ -181,7 +181,8 @@
         {
           $parameters = array("Operation"     => "ItemLookup",
                               "ItemId"        => $asin_code,
-                              "Condition"     => "All",
+                              "Condition"     => "New",
+                              "MerchantId"     => "Amazon",
 
                               "ResponseGroup" => "VariationMatrix");
 
@@ -204,9 +205,10 @@
         {
             $parameters = array("Operation"     => "ItemLookup",
                                 "ItemId"        => $asin_code,
-                                "Condition"     => "All",
+                                "Condition"     => "New",
+                                "MerchantId"     => "Amazon",
                                 "Availability"  => "Available",
-                                "ResponseGroup" => "ItemAttributes,Images,Offers");
+                                "ResponseGroup" => "ItemAttributes,Images,Offers,EditorialReview");
 
 
             $xml_response = $this->queryAmazon($parameters);
