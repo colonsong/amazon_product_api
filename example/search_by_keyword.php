@@ -1,83 +1,36 @@
-<?php
-    if(isset($_POST['keyword'])){
-      /* Example usage of the Amazon Product Advertising API */
-      require("amazon_api_class.php");
-
-      $obj = new AmazonProductAPI();
-      $keyword = ($_POST['keyword']!='')?$_POST['keyword']:"";
-      $category = ($_POST['category']!='')?$_POST['category']:"All";
-      try
-      {
-          $result = $obj->getItemByKeyword($keyword,$category,"TITLE");
-      }
-      catch(Exception $e)
-      {
-          echo $e->getMessage();
-      }
-	  
-	  if(isset($result['Items'])){
-          if(isset($result['Items']['Request']['Errors'])){
-		  
-     /* echo '<PRE>';
-      print_r($result);
-      echo '</PRE>';*/
-?>
-	<div class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title">錯誤訊息</h3>
-      </div>
-      <div class="panel-body">
-          <PRE><?php echo print_r($result['Items']['Request'], TRUE); ?></PRE>
-      </div>
-    </div>
-<?php
-      }else{
-?>
-	<div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">傳送參數</h3>
-      </div>
-      <div class="panel-body">
-          <PRE><?php echo print_r($result['Items']['Request'], TRUE); ?></PRE>
-      </div>
-    </div>
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">回應</h3>
-      </div>
-      <div class="panel-body">
-          <PRE><?php echo print_r($result['Items']['Item'], TRUE); ?></PRE>
-      </div>
-    </div>
-<?php
-          }
-      }
-    }else{
-?>
-
 <form class="form-horizontal" method="post" action="?example=search_by_keyword">
-  <div class="form-group">
-    <label for="keyword" class="col-sm-2 control-label">keyword</label>
-    <div class="col-sm-10">
-      <input type="text" name="keyword" class="form-control" id="keyword" placeholder="Enter keyword">
+    <div class="form-group">
+        <label for="keyword" class="col-sm-2 control-label">keyword</label>
+        <div class="col-sm-10">
+            <input type="text" name="keyword" class="form-control" id="keyword" placeholder="Enter keyword" value="<?php echo (isset($_POST['keyword']))?$_POST['keyword']:''; ?>">
+        </div>  
+    </div>
+    <div class="form-group">
+        <label for="category" class="col-sm-2 control-label">category</label>
+        <div class="col-sm-10">
+            <div class="input-group">
+                <input type="text" name="category" class="form-control" id="category" placeholder="Enter category Default:Toys" value="<?php echo (isset($_POST['category']))?$_POST['category']:''; ?>">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">Example</button>
+                </span>
+            </div><!-- /input-group -->
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="category" class="col-sm-2 control-label">除錯</label>
+        <div class="col-sm-10">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="debug" value="1"<?php echo (isset($_POST['debug']) && $_POST['debug'] === '1')?' checked':''; ?>> Debug Mode
+            </label>
+          </div>
+        </div>
     </div>  
-  </div>
-  <div class="form-group">
-    <label for="category" class="col-sm-2 control-label">category</label>
-    <div class="col-sm-10">
-      <div class="input-group">
-        <input type="text" name="category" class="form-control" id="category" placeholder="Enter category Default:Toys">
-        <span class="input-group-btn">
-          <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">Example</button>
-        </span>
-      </div><!-- /input-group -->
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
     </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Submit</button>
-    </div>
-  </div>
   
 </form>
 <!-- Modal -->
@@ -138,5 +91,79 @@
   </div>
 </div>
 <?php
+    if(isset($_POST['keyword'])){
+        /* Example usage of the Amazon Product Advertising API */
+        require("amazon_api_class.php");
+
+        $obj = new AmazonProductAPI();
+        $keyword = ($_POST['keyword']!='')?$_POST['keyword']:"";
+        $category = ($_POST['category']!='')?$_POST['category']:"All";
+        try
+        {
+            $result = $obj->getItemByKeyword($keyword,$category,"TITLE");
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage();
+        }
+	  
+        if(isset($result['Items'])){
+            if(isset($_POST['debug']) && $_POST['debug'] === '1'){
+                if(isset($result['Items']['Request']['Errors'])){
+?>
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">錯誤訊息</h3>
+        </div>
+        <div class="panel-body">
+            <PRE><?php echo print_r($result['Items']['Request'], TRUE); ?></PRE>
+        </div>
+    </div>
+<?php
+                }else{
+?>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">傳送參數</h3>
+        </div>
+        <div class="panel-body">
+            <PRE><?php echo print_r($result['Items']['Request'], TRUE); ?></PRE>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">回應</h3>
+        </div>
+        <div class="panel-body">
+            <PRE><?php echo print_r($result['Items']['Item'], TRUE); ?></PRE>
+        </div>
+    </div>
+<?php
+                }
+            }
+        }
+        if(isset($result['BrowseNodes']['BrowseNode'])):
+?>
+    <table class="table table-hover">
+        <tr>
+            <th>ASIN</th><th>title</th><th><span class="label label-primary">Creator</span>/<span class="label label-success">Manufacturer</span>/<span class="label label-info">ProductGroup</span></th><th>debug</th>
+        </tr>
+<?php
+        foreach($result['Items']['Item'] as $item):
+?>
+        <tr>
+            <td><?php echo $item['ASIN']; ?></td>
+            <td><a href="<?php echo $item['DetailPageURL']; ?>" target="_blank"><?php echo $item['ItemAttributes']['Title']; ?></a></td>
+            <td>
+                <span class="label label-primary"><?php echo (isset($item['ItemAttributes']['Creator']))?$item['ItemAttributes']['Creator']:'none'; ?></span>/<span class="label label-success"><?php echo $item['ItemAttributes']['Manufacturer']; ?></span>/<span class="label label-info"><?php echo $item['ItemAttributes']['ProductGroup']; ?></span>
+            </td>
+            <td><?php (isset($_POST['debug']) && $_POST['debug'] === '1')?var_dump($item):''; ?></td>
+        </tr>
+<?php
+        endforeach;
+?>
+    </table>    
+<?php
+        endif;
     }
 ?>
