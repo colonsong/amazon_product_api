@@ -313,7 +313,7 @@
         */
         public function create_cart()
         {
-          print_r($_POST);
+          //print_r($_POST);
           $OfferListingId = $_POST['OfferListingId'];
           $Quantity = $_POST['Quantity'];
 
